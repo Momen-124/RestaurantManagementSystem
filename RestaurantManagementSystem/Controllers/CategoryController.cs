@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantManagementSystem.Models;
 using RestaurantManagementSystem.Data;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize(Roles ="Admin")]
 public class CategoryController : Controller
 {
     private readonly AppDbContext _context;

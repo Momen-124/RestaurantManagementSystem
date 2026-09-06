@@ -39,9 +39,16 @@
             <td>
                 @Html.DisplayFor(model => item.Price)
             </td>
-            <td>
-                @Html.DisplayFor(model => item.ImagePath)
-            </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                    {
+                        <img src="@item.ImagePath" alt="@item.Name" width="80" />
+                    }
+                    else
+                    {
+                        <span>لا توجد صورة</span>
+                    }
+                </td>
             <td>
                 @Html.DisplayFor(model => item.CategoryId)
             </td>

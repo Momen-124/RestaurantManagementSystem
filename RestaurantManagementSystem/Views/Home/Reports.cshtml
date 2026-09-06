@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Reports";
+}
+
+<h1>التقارير</h1>
+
+<h3 class="mt-4">المبيعات حسب الصنف</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>الصنف</th>
+            <th>الكمية المباعة</th>
+            <th>الإيرادات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.SalesByItem)
+        {
+            <tr>
+                <td>@item.ItemName</td>
+                <td>@item.TotalQuantity</td>
+                <td>@item.TotalRevenue.ToString("F2") ج.م</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3 class="mt-5">المبيعات حسب اليوم</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>التاريخ</th>
+            <th>عدد الطلبات</th>
+            <th>الإيرادات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var day in ViewBag.SalesByDay)
+        {
+            <tr>
+                <td>@day.Date.ToString("yyyy-MM-dd")</td>
+                <td>@day.OrderCount</td>
+                <td>@day.DayRevenue.ToString("F2") ج.م</td>
+            </tr>
+        }
+    </tbody>
+</table>

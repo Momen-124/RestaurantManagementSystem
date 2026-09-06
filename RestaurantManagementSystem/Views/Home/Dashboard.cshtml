@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1>لوحة التحكم</h1>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">إجمالي الطلبات</h5>
+                <p class="card-text fs-3">@ViewBag.TotalOrders</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">إجمالي المبيعات</h5>
+                <p class="card-text fs-3">@ViewBag.TotalRevenue.ToString("F2") ج.م</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">طلبات قيد الانتظار</h5>
+                <p class="card-text fs-3">@ViewBag.PendingOrders</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">الأكثر طلبًا</h5>
+                <p class="card-text">@ViewBag.TopMenuItem (@ViewBag.TopMenuItemQty مرة)</p>
+            </div>
+        </div>
+    </div>
+</div>

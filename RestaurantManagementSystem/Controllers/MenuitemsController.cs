@@ -1,10 +1,13 @@
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RestaurantManagementSystem.Data;
 using RestaurantManagementSystem.Models;
 
+
+[Authorize(Roles = "Admin")]
 public class MenuitemsController : Controller
 {
     private readonly AppDbContext _context;
@@ -50,15 +53,28 @@ public class MenuitemsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Price,ImagePath,CategoryId")] Menuitem menuitem)
+    public async Task<IActionResult> Create([Bind("Id,Name,Price,ImagePath,CategoryId")] Menuitem menuitem , IFormFile? imageFile)
     {
         if (ModelState.IsValid)
         {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                var filePath = Path.Combine("wwwroot/images/menu", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+
+                menuitem.ImagePath = "/images/menu/" + fileName;
+            }
+
             _context.Add(menuitem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name",menuitem.CategoryId);
+        ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", menuitem.CategoryId);
         return View(menuitem);
     }
 
